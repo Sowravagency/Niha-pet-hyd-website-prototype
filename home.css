@@ -1,0 +1,22 @@
+/* Mobile Menu Drawer Animation & State Display */
+#mobile-menu-drawer.open {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  animation: slideDownMenu 0.25s ease-out forwards;
+}
+
+#mobile-menu-drawer:not(.open) {
+  display: none !important;
+}
+
+@keyframes slideDownMenu {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
