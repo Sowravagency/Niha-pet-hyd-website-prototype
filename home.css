@@ -1,3 +1,75 @@
+/* ========================================================
+   Niha's Pet Care Clinic - Stylesheet (styles.css)
+   Brand Palette:
+     - #4C2365 (Deep Plum / Primary Dark)
+     - #7F5D99 (Medium Amethyst / Accent Violet)
+     - #C4A4DA (Soft Lavender / Delicate Lilac)
+   ======================================================== */
+
+:root {
+  --color-brand-deep: #4C2365;
+  --color-brand-medium: #7F5D99;
+  --color-brand-soft: #C4A4DA;
+  --color-brand-mist: #F5EFFB;
+  --color-brand-silk: #FAF7FC;
+  --color-brand-dark: #261036;
+  --color-accent-gold: #D4AF37;
+  --color-accent-emerald: #10B981;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-brand-silk);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-brand-soft);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand-medium);
+}
+
+/* Glassmorphism & Visual Accents */
+.glass-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(196, 164, 218, 0.35);
+}
+
+.badge-gradient {
+  background: linear-gradient(135deg, var(--color-brand-deep) 0%, var(--color-brand-medium) 100%);
+}
+
+.hero-glow {
+  background: radial-gradient(circle at 50% 50%, rgba(196, 164, 218, 0.25) 0%, rgba(250, 247, 252, 0) 70%);
+}
+
+/* Custom Utilities & Animations */
+.shadow-purple-soft {
+  box-shadow: 0 10px 30px -10px rgba(76, 35, 101, 0.15);
+}
+
+.shadow-purple-deep {
+  box-shadow: 0 20px 40px -15px rgba(76, 35, 101, 0.3);
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Modal transitions */
+.modal-backdrop {
+  background-color: rgba(38, 16, 54, 0.65);
+  backdrop-filter: blur(4px);
+}
+
 /* Mobile Menu Drawer Animation & State Display */
 #mobile-menu-drawer.open {
   display: block !important;
