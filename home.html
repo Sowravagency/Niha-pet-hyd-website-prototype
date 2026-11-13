@@ -1,0 +1,64 @@
+<!-- Mobile Header Actions & Toggle Button -->
+<div class="flex items-center gap-2 md:hidden">
+  <button type="button" id="mobile-cart-btn" class="relative p-2 rounded-xl text-brand-deep hover:bg-brand-mist" title="View Basket" onclick="openCartDrawer()">
+    <svg class="w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+    <span id="mobile-cart-badge" class="absolute top-0 right-0 bg-brand-deep text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
+  </button>
+  
+  <!-- Hamburger Button -->
+  <button type="button" id="mobile-menu-toggle" class="p-2.5 rounded-xl text-brand-deep hover:bg-brand-mist focus:outline-none border border-brand-soft/50 active:scale-95 transition-all" aria-label="Toggle Navigation Menu" aria-expanded="false" onclick="toggleMobileMenu(event)">
+    <svg id="hamburger-icon" class="w-6 h-6 pointer-events-none block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+    <svg id="close-icon" class="w-6 h-6 pointer-events-none hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+  </button>
+</div>
+
+<!-- Mobile Navigation Drawer -->
+<div id="mobile-menu-drawer" class="hidden border-t border-brand-soft/40 bg-white/98 backdrop-blur-md px-4 pt-3 pb-6 shadow-2xl transition-all duration-200 w-full" style="display: none;">
+  <div class="flex flex-col gap-2 pt-1">
+    <button type="button" class="mobile-nav-link text-left px-4 py-3 rounded-xl text-base font-bold transition-colors flex items-center justify-between bg-brand-mist text-brand-deep shadow-xs" data-target="home" onclick="switchView('home')">
+      <span class="flex items-center gap-3">
+        <span class="w-7 h-7 rounded-lg bg-brand-soft/40 text-brand-deep flex items-center justify-center text-xs">🏠</span>
+        <span>Home</span>
+      </span>
+      <svg class="w-4 h-4 text-brand-medium" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+    </button>
+    
+    <button type="button" class="mobile-nav-link text-left px-4 py-3 rounded-xl text-base font-medium text-gray-700 hover:bg-brand-mist/50 transition-colors flex items-center justify-between" data-target="shop" onclick="switchView('shop')">
+      <span class="flex items-center gap-3">
+        <span class="w-7 h-7 rounded-lg bg-brand-soft/40 text-brand-deep flex items-center justify-center text-xs">🛍️</span>
+        <span>Shop & Pharmacy</span>
+      </span>
+      <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+    </button>
+    
+    <button type="button" class="mobile-nav-link text-left px-4 py-3 rounded-xl text-base font-medium text-gray-700 hover:bg-brand-mist/50 transition-colors flex items-center justify-between" data-target="services" onclick="switchView('services')">
+      <span class="flex items-center gap-3">
+        <span class="w-7 h-7 rounded-lg bg-brand-soft/40 text-brand-deep flex items-center justify-center text-xs">🩺</span>
+        <span>Clinical Services</span>
+      </span>
+      <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+    </button>
+    
+    <button type="button" class="mobile-nav-link text-left px-4 py-3 rounded-xl text-base font-medium text-gray-700 hover:bg-brand-mist/50 transition-colors flex items-center justify-between" data-target="about" onclick="switchView('about')">
+      <span class="flex items-center gap-3">
+        <span class="w-7 h-7 rounded-lg bg-brand-soft/40 text-brand-deep flex items-center justify-center text-xs">ℹ️</span>
+        <span>About Dr. Niha</span>
+      </span>
+      <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+    </button>
+
+    <div class="pt-3 mt-1 border-t border-brand-soft/30 flex flex-col gap-2.5">
+      <!-- CTA: Book Appointment -->
+      <button type="button" id="mobile-cta-book-btn" class="w-full py-3.5 rounded-xl font-bold text-white bg-brand-deep hover:bg-brand-medium text-center shadow-md flex items-center justify-center gap-2 active:scale-98 transition-all" onclick="openBookingModal(); closeMobileMenu();">
+        <svg class="w-5 h-5 text-brand-soft" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+        <span>Book Appointment</span>
+      </button>
+      
+      <!-- Helpline -->
+      <a href="tel:9492100000" class="w-full py-2.5 rounded-xl font-semibold text-brand-deep border border-brand-soft/80 bg-brand-silk text-center text-xs flex items-center justify-center gap-2">
+        <svg class="w-4 h-4 text-accent-gold" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.72 11.72 0 003.68.59 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.72 11.72 0 00.59 3.68 1 1 0 01-.24 1.02l-2.23 2.09z"></path></svg>
+        <span>Call Clinic: 94921 XXXXX</span>
+      </a>
+    </div>
+  </div>
+</div>
