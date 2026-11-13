@@ -1,64 +1,1419 @@
-<!-- Mobile Header Actions & Toggle Button -->
-<div class="flex items-center gap-2 md:hidden">
-  <button type="button" id="mobile-cart-btn" class="relative p-2 rounded-xl text-brand-deep hover:bg-brand-mist" title="View Basket" onclick="openCartDrawer()">
-    <svg class="w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-    <span id="mobile-cart-badge" class="absolute top-0 right-0 bg-brand-deep text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
-  </button>
-  
-  <!-- Hamburger Button -->
-  <button type="button" id="mobile-menu-toggle" class="p-2.5 rounded-xl text-brand-deep hover:bg-brand-mist focus:outline-none border border-brand-soft/50 active:scale-95 transition-all" aria-label="Toggle Navigation Menu" aria-expanded="false" onclick="toggleMobileMenu(event)">
-    <svg id="hamburger-icon" class="w-6 h-6 pointer-events-none block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-    <svg id="close-icon" class="w-6 h-6 pointer-events-none hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
-  </button>
-</div>
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Niha's Pet Care Clinic | Veterinary Care, Clinic Booking & Pet Sales</title>
+  <!-- Google Fonts: Plus Jakarta Sans & Playfair Display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              deep: '#4C2365',     // Core requested deep purple
+              medium: '#7F5D99',   // Core requested medium purple
+              soft: '#C4A4DA',     // Core requested soft lavender
+              mist: '#F5EFFB',     // Soft tinted surface
+              silk: '#FAF7FC',     // Light background
+              dark: '#261036',     // Deep text/contrast
+            },
+            accent: {
+              gold: '#D4AF37',
+              emerald: '#10B981',
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+          },
+          boxShadow: {
+            'purple-soft': '0 10px 30px -10px rgba(76, 35, 101, 0.15)',
+            'purple-deep': '0 20px 40px -15px rgba(76, 35, 101, 0.3)',
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="home.css">
+</head>
+<body class="bg-brand-silk text-brand-dark font-sans min-h-screen flex flex-col selection:bg-brand-soft selection:text-brand-deep">
 
-<!-- Mobile Navigation Drawer -->
-<div id="mobile-menu-drawer" class="hidden border-t border-brand-soft/40 bg-white/98 backdrop-blur-md px-4 pt-3 pb-6 shadow-2xl transition-all duration-200 w-full" style="display: none;">
-  <div class="flex flex-col gap-2 pt-1">
-    <button type="button" class="mobile-nav-link text-left px-4 py-3 rounded-xl text-base font-bold transition-colors flex items-center justify-between bg-brand-mist text-brand-deep shadow-xs" data-target="home" onclick="switchView('home')">
-      <span class="flex items-center gap-3">
-        <span class="w-7 h-7 rounded-lg bg-brand-soft/40 text-brand-deep flex items-center justify-center text-xs">🏠</span>
-        <span>Home</span>
-      </span>
-      <svg class="w-4 h-4 text-brand-medium" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-    </button>
-    
-    <button type="button" class="mobile-nav-link text-left px-4 py-3 rounded-xl text-base font-medium text-gray-700 hover:bg-brand-mist/50 transition-colors flex items-center justify-between" data-target="shop" onclick="switchView('shop')">
-      <span class="flex items-center gap-3">
-        <span class="w-7 h-7 rounded-lg bg-brand-soft/40 text-brand-deep flex items-center justify-center text-xs">🛍️</span>
-        <span>Shop & Pharmacy</span>
-      </span>
-      <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-    </button>
-    
-    <button type="button" class="mobile-nav-link text-left px-4 py-3 rounded-xl text-base font-medium text-gray-700 hover:bg-brand-mist/50 transition-colors flex items-center justify-between" data-target="services" onclick="switchView('services')">
-      <span class="flex items-center gap-3">
-        <span class="w-7 h-7 rounded-lg bg-brand-soft/40 text-brand-deep flex items-center justify-center text-xs">🩺</span>
-        <span>Clinical Services</span>
-      </span>
-      <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-    </button>
-    
-    <button type="button" class="mobile-nav-link text-left px-4 py-3 rounded-xl text-base font-medium text-gray-700 hover:bg-brand-mist/50 transition-colors flex items-center justify-between" data-target="about" onclick="switchView('about')">
-      <span class="flex items-center gap-3">
-        <span class="w-7 h-7 rounded-lg bg-brand-soft/40 text-brand-deep flex items-center justify-center text-xs">ℹ️</span>
-        <span>About Dr. Niha</span>
-      </span>
-      <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-    </button>
+  <!-- Top Announcement & Emergency Bar -->
+  <aside aria-label="Emergency Announcement" class="bg-brand-deep text-white text-xs sm:text-sm py-2 px-4 shadow-sm border-b border-brand-medium/30">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-brand-soft text-brand-deep">
+          HYDERABAD
+        </span>
+        <span class="text-brand-soft">✨ Manikonda's Trusted Fear-Free Pet Clinic & Wellness Boutique</span>
+      </div>
+      <div class="flex items-center gap-4 text-xs">
+        <span class="flex items-center gap-1.5 text-purple-200">
+          <svg class="w-3.5 h-3.5 text-brand-soft" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          Mon - Sat: 9:30 AM - 9:00 PM | Sun: 10:00 AM - 2:00 PM
+        </span>
+        <a href="tel:9492100000" class="font-semibold text-white hover:text-brand-soft transition-colors flex items-center gap-1">
+          <svg class="w-3.5 h-3.5 text-accent-gold" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.72 11.72 0 003.68.59 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.72 11.72 0 00.59 3.68 1 1 0 01-.24 1.02l-2.23 2.09z"></path></svg>
+          Helpdesk: 94921 XXXXX
+        </a>
+      </div>
+    </div>
+  </aside>
 
-    <div class="pt-3 mt-1 border-t border-brand-soft/30 flex flex-col gap-2.5">
-      <!-- CTA: Book Appointment -->
-      <button type="button" id="mobile-cta-book-btn" class="w-full py-3.5 rounded-xl font-bold text-white bg-brand-deep hover:bg-brand-medium text-center shadow-md flex items-center justify-center gap-2 active:scale-98 transition-all" onclick="openBookingModal(); closeMobileMenu();">
-        <svg class="w-5 h-5 text-brand-soft" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-        <span>Book Appointment</span>
-      </button>
+  <!-- Main Navigation Header -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-brand-soft/40 shadow-sm transition-all duration-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Brand Logo & Name -->
+        <div class="flex items-center gap-3 cursor-pointer" id="nav-brand-logo">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-deep to-brand-medium flex items-center justify-center text-white shadow-md shadow-brand-deep/20">
+            <!-- Veterinary Paw Heart Icon -->
+            <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" opacity="0.3"/>
+              <circle cx="8" cy="8" r="2.2"/>
+              <circle cx="16" cy="8" r="2.2"/>
+              <circle cx="5" cy="13" r="1.8"/>
+              <circle cx="19" cy="13" r="1.8"/>
+              <path d="M12 11.5c-2.5 0-4.5 2-4.5 4.5 0 1.9 1.8 3.5 4.5 5 2.7-1.5 4.5-3.1 4.5-5 0-2.5-2-4.5-4.5-4.5z"/>
+            </svg>
+          </div>
+          <div>
+            <span class="text-xl sm:text-2xl font-bold font-serif tracking-tight text-brand-deep block leading-tight">
+              Niha's <span class="text-brand-medium font-sans font-semibold text-lg sm:text-xl">Pet Care Clinic</span>
+            </span>
+            <span class="text-xs text-gray-500 font-medium tracking-wide flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              Led by Dr. Niha • Alkapur Township
+            </span>
+          </div>
+        </div>
+
+        <!-- Desktop Navigation Items (Home, Shop, Services, About) -->
+        <nav class="hidden md:flex items-center gap-1 lg:gap-2">
+          <button type="button" class="nav-item-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 text-brand-deep bg-brand-mist shadow-sm" data-target="home">
+            Home
+          </button>
+          <button type="button" class="nav-item-btn px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 text-gray-600 hover:text-brand-deep hover:bg-brand-mist/60" data-target="shop">
+            Shop
+          </button>
+          <button type="button" class="nav-item-btn px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 text-gray-600 hover:text-brand-deep hover:bg-brand-mist/60" data-target="services">
+            Services
+          </button>
+          <button type="button" class="nav-item-btn px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 text-gray-600 hover:text-brand-deep hover:bg-brand-mist/60" data-target="about">
+            About
+          </button>
+        </nav>
+
+        <!-- Right Header Actions: Cart & Primary CTA -->
+        <div class="hidden sm:flex items-center gap-3">
+          <!-- Cart Toggle Button -->
+          <button type="button" id="cart-toggle-btn" class="relative p-2.5 rounded-xl border border-brand-soft/50 hover:bg-brand-mist text-brand-deep transition-colors" title="View Shopping Cart">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+            <span id="cart-badge-count" class="absolute -top-1.5 -right-1.5 bg-brand-deep text-white font-bold text-[10px] w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">
+              0
+            </span>
+          </button>
+
+          <!-- CTA - Book Appointment -->
+          <button type="button" id="header-cta-book-btn" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-brand-deep hover:bg-brand-medium active:scale-95 transition-all shadow-md shadow-brand-deep/20">
+            <svg class="w-4 h-4 text-brand-soft" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+            <span>Book Appointment</span>
+          </button>
+        </div>
+
+        <!-- Mobile Menu Toggle Button -->
+        <div class="flex items-center gap-2 md:hidden">
+          <button type="button" id="mobile-cart-btn" class="relative p-2 rounded-xl text-brand-deep hover:bg-brand-mist">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+            <span id="mobile-cart-badge" class="absolute top-0 right-0 bg-brand-deep text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">0</span>
+          </button>
+          <button type="button" id="mobile-menu-toggle" class="p-2.5 rounded-xl text-brand-deep hover:bg-brand-mist focus:outline-none border border-brand-soft/50 active:scale-95 transition-all" aria-label="Toggle Navigation Menu" aria-expanded="false" onclick="toggleMobileMenu(event)">
+            <svg id="hamburger-icon" class="w-6 h-6 pointer-events-none block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            <svg id="close-icon" class="w-6 h-6 pointer-events-none hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu-drawer" class="hidden border-t border-brand-soft/40 bg-white/98 backdrop-blur-md px-4 pt-3 pb-6 shadow-2xl transition-all duration-200 w-full">
+      <div class="flex flex-col gap-2 pt-1">
+        <button type="button" class="mobile-nav-link text-left px-4 py-3 rounded-xl text-base font-bold transition-colors flex items-center justify-between bg-brand-mist text-brand-deep shadow-xs" data-target="home" onclick="switchView('home')">
+          <span class="flex items-center gap-3">
+            <span class="w-7 h-7 rounded-lg bg-brand-soft/40 text-brand-deep flex items-center justify-center text-xs">🏠</span>
+            <span>Home</span>
+          </span>
+          <svg class="w-4 h-4 text-brand-medium" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </button>
+        <button type="button" class="mobile-nav-link text-left px-4 py-3 rounded-xl text-base font-medium text-gray-700 hover:bg-brand-mist/50 transition-colors flex items-center justify-between" data-target="shop" onclick="switchView('shop')">
+          <span class="flex items-center gap-3">
+            <span class="w-7 h-7 rounded-lg bg-brand-soft/40 text-brand-deep flex items-center justify-center text-xs">🛍️</span>
+            <span>Shop & Pharmacy</span>
+          </span>
+          <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </button>
+        <button type="button" class="mobile-nav-link text-left px-4 py-3 rounded-xl text-base font-medium text-gray-700 hover:bg-brand-mist/50 transition-colors flex items-center justify-between" data-target="services" onclick="switchView('services')">
+          <span class="flex items-center gap-3">
+            <span class="w-7 h-7 rounded-lg bg-brand-soft/40 text-brand-deep flex items-center justify-center text-xs">🩺</span>
+            <span>Clinical Services</span>
+          </span>
+          <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </button>
+        <button type="button" class="mobile-nav-link text-left px-4 py-3 rounded-xl text-base font-medium text-gray-700 hover:bg-brand-mist/50 transition-colors flex items-center justify-between" data-target="about" onclick="switchView('about')">
+          <span class="flex items-center gap-3">
+            <span class="w-7 h-7 rounded-lg bg-brand-soft/40 text-brand-deep flex items-center justify-center text-xs">ℹ️</span>
+            <span>About Dr. Niha</span>
+          </span>
+          <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </button>
+        <div class="pt-3 border-t border-gray-100 flex flex-col gap-2">
+          <button type="button" id="mobile-cta-book-btn" class="w-full py-3 rounded-xl font-semibold text-white bg-brand-deep hover:bg-brand-medium text-center shadow-md flex items-center justify-center gap-2">
+            <svg class="w-4 h-4 text-brand-soft" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+            Book Appointment
+          </button>
+          <a href="tel:9492100000" class="w-full py-2.5 rounded-xl font-medium text-brand-deep border border-brand-soft text-center text-sm flex items-center justify-center gap-2">
+            Call Clinic: 94921 XXXXX
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Notification Toast Container -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- MAIN VIEWPORT CONTAINER -->
+  <main class="flex-grow">
+
+    <!-- ============================================== -->
+    <!-- 1. HOME PAGE VIEW                              -->
+    <!-- ============================================== -->
+    <section id="view-home" class="page-view block">
       
-      <!-- Helpline -->
-      <a href="tel:9492100000" class="w-full py-2.5 rounded-xl font-semibold text-brand-deep border border-brand-soft/80 bg-brand-silk text-center text-xs flex items-center justify-center gap-2">
-        <svg class="w-4 h-4 text-accent-gold" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.72 11.72 0 003.68.59 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.72 11.72 0 00.59 3.68 1 1 0 01-.24 1.02l-2.23 2.09z"></path></svg>
-        <span>Call Clinic: 94921 XXXXX</span>
-      </a>
+      <!-- Hero Section -->
+      <div class="relative overflow-hidden pt-8 pb-16 lg:py-20 bg-gradient-to-b from-brand-silk via-brand-mist/40 to-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <!-- Left Hero Content -->
+            <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+              <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-mist border border-brand-soft/60 text-brand-deep text-xs sm:text-sm font-semibold shadow-xs">
+                <span class="w-2 h-2 rounded-full bg-brand-medium animate-pulse"></span>
+                <span>Alkapur Township & Manikonda's Trusted Vet</span>
+              </div>
+              
+              <h1 class="text-3xl sm:text-5xl lg:text-6xl font-serif font-bold text-brand-deep tracking-tight leading-[1.15]">
+                Compassionate healing, <br class="hidden sm:inline">
+                <span class="italic font-normal text-brand-medium">gentle care</span> & healthy lives.
+              </h1>
+              
+              <p class="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+                Welcome to <strong>Niha's Pet Care Clinic</strong>, led by <strong>Dr. Niha</strong>. We combine state-of-the-art veterinary medicine, surgical precision, and fear-free tender handling with a curated boutique pet shop for all your furry companion's health and dietary needs.
+              </p>
+
+              <!-- CTA Buttons -->
+              <div class="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                <button type="button" class="btn-open-booking w-full sm:w-auto px-8 py-3.5 rounded-xl font-bold text-white bg-brand-deep hover:bg-brand-medium shadow-purple-deep shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2 active:scale-95 text-base">
+                  <svg class="w-5 h-5 text-brand-soft" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                  <span>Book Appointment</span>
+                </button>
+                <button type="button" class="btn-navigate-shop w-full sm:w-auto px-7 py-3.5 rounded-xl font-semibold text-brand-deep bg-white border-2 border-brand-soft/80 hover:bg-brand-mist hover:border-brand-medium transition-all duration-200 flex items-center justify-center gap-2 text-base">
+                  <svg class="w-5 h-5 text-brand-medium" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                  <span>Explore Pet Shop</span>
+                </button>
+              </div>
+
+              <!-- Trust Points / Metrics -->
+              <div class="pt-6 grid grid-cols-3 gap-3 border-t border-brand-soft/30 max-w-lg mx-auto lg:mx-0">
+                <div class="text-center lg:text-left">
+                  <span class="block text-2xl sm:text-3xl font-extrabold text-brand-deep">4,800+</span>
+                  <span class="text-xs text-gray-500 font-medium">Pets Treated</span>
+                </div>
+                <div class="text-center lg:text-left">
+                  <span class="block text-2xl sm:text-3xl font-extrabold text-brand-deep">100%</span>
+                  <span class="text-xs text-gray-500 font-medium">Fear-Free Care</span>
+                </div>
+                <div class="text-center lg:text-left">
+                  <span class="block text-2xl sm:text-3xl font-extrabold text-brand-deep">4.9 ★</span>
+                  <span class="text-xs text-gray-500 font-medium">Verified Reviews</span>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Right Hero Image Card -->
+            <div class="lg:col-span-5 relative">
+              <div class="relative mx-auto max-w-md lg:max-w-none">
+                <!-- Decorative Blur Backdrops -->
+                <div class="absolute -top-6 -right-6 w-64 h-64 bg-brand-soft/40 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-6 -left-6 w-64 h-64 bg-brand-medium/20 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <!-- Main Image Container -->
+                <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
+                  <img src="images/hero_clinic.jpg" alt="Dr. Niha caring for pets at Niha's Pet Care Clinic" class="w-full h-[400px] sm:h-[480px] object-cover hover:scale-105 transition-transform duration-700">
+                  <div class="absolute inset-0 bg-gradient-to-t from-brand-deep/70 via-transparent to-transparent"></div>
+                  
+                  <!-- Floating Badge on Hero Image -->
+                  <div class="absolute bottom-4 left-4 right-4 p-4 rounded-2xl glass-card border border-white/60 shadow-lg flex items-center justify-between">
+                    <div>
+                      <p class="text-xs font-semibold uppercase tracking-wider text-brand-deep">Chief Veterinarian</p>
+                      <h4 class="text-base font-bold text-brand-dark">Dr. Niha (B.V.Sc & A.H.)</h4>
+                      <p class="text-xs text-gray-600">Surgeon & Small Animal Specialist</p>
+                    </div>
+                    <button type="button" class="btn-open-booking p-2.5 rounded-xl bg-brand-deep text-white hover:bg-brand-medium transition-colors" title="Book Consultation with Dr. Niha">
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Interactive Appointment Booking Bar -->
+      <section aria-label="Appointment Quick-Booking" class="relative z-10 -mt-6 sm:-mt-8 max-w-5xl mx-auto px-4">
+        <div class="glass-card rounded-2xl p-5 sm:p-6 shadow-xl border border-brand-soft/60">
+          <div class="flex flex-col md:flex-row items-center gap-4 justify-between">
+            <div class="w-full md:w-auto">
+              <span class="text-xs font-bold uppercase tracking-wider text-brand-medium block">Instant Clinic Pass</span>
+              <h3 class="text-lg font-bold text-brand-deep">Quick Schedule a Consultation</h3>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full md:w-2/3">
+              <select id="quick-pet-select" class="w-full px-3 py-2.5 rounded-xl border border-brand-soft bg-white text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-brand-deep">
+                <option value="Dog">🐕 Dog / Puppy</option>
+                <option value="Cat">🐈 Cat / Kitten</option>
+                <option value="Bird">🦜 Bird / Parakeet</option>
+                <option value="Small Pet">🐇 Rabbit / Small Pet</option>
+              </select>
+              <select id="quick-service-select" class="w-full px-3 py-2.5 rounded-xl border border-brand-soft bg-white text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-brand-deep">
+                <option value="General Health Checkup">General Health Checkup</option>
+                <option value="Vaccination & Deworming">Vaccination & Deworming</option>
+                <option value="Diagnostics & Ultrasound">Diagnostics & Blood Work</option>
+                <option value="Dental Scaling">Dental Scaling & Care</option>
+                <option value="Medicated Spa & Grooming">Therapeutic Grooming</option>
+              </select>
+              <button type="button" id="quick-find-slot-btn" class="w-full px-4 py-2.5 rounded-xl font-semibold text-white bg-brand-deep hover:bg-brand-medium transition-colors text-sm shadow-sm flex items-center justify-center gap-2">
+                <span>Select Slot</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Services Preview Section -->
+      <div class="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+          <span class="text-xs sm:text-sm font-bold uppercase tracking-wider text-brand-medium">Exceptional Clinical Services</span>
+          <h2 class="text-3xl sm:text-4xl font-serif font-bold text-brand-deep mt-2">Comprehensive Veterinary Care</h2>
+          <p class="text-gray-600 mt-3 text-base">From routine preventive wellness to intricate soft tissue surgeries, Dr. Niha provides clinical precision with utmost warmth.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          
+          <!-- Service Card 1 -->
+          <div class="bg-white rounded-2xl p-6 border border-brand-soft/40 hover:border-brand-medium hover:shadow-purple-soft transition-all duration-300 flex flex-col justify-between group">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-brand-mist text-brand-deep flex items-center justify-center mb-5 group-hover:bg-brand-deep group-hover:text-white transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+              </div>
+              <h3 class="text-lg font-bold text-brand-dark mb-2">Vaccination & Immunity</h3>
+              <p class="text-sm text-gray-600 leading-relaxed">Core DHPPiL, Rabies, Tricat vaccinations with customized digital immunization scheduling and deworming.</p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+              <span class="text-xs font-semibold text-brand-deep">From ₹850</span>
+              <button type="button" class="btn-book-specific text-xs font-bold text-brand-medium hover:text-brand-deep" data-service="Vaccination & Deworming">Book Now →</button>
+            </div>
+          </div>
+
+          <!-- Service Card 2 -->
+          <div class="bg-white rounded-2xl p-6 border border-brand-soft/40 hover:border-brand-medium hover:shadow-purple-soft transition-all duration-300 flex flex-col justify-between group">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-brand-mist text-brand-deep flex items-center justify-center mb-5 group-hover:bg-brand-deep group-hover:text-white transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path></svg>
+              </div>
+              <h3 class="text-lg font-bold text-brand-dark mb-2">Digital Diagnostics</h3>
+              <p class="text-sm text-gray-600 leading-relaxed">In-house ultrasound, hematology (CBC), serum biochemistry, and microscopic cytology for rapid same-day diagnosis.</p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+              <span class="text-xs font-semibold text-brand-deep">From ₹1,200</span>
+              <button type="button" class="btn-book-specific text-xs font-bold text-brand-medium hover:text-brand-deep" data-service="Diagnostics & Ultrasound">Book Now →</button>
+            </div>
+          </div>
+
+          <!-- Service Card 3 -->
+          <div class="bg-white rounded-2xl p-6 border border-brand-soft/40 hover:border-brand-medium hover:shadow-purple-soft transition-all duration-300 flex flex-col justify-between group">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-brand-mist text-brand-deep flex items-center justify-center mb-5 group-hover:bg-brand-deep group-hover:text-white transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              </div>
+              <h3 class="text-lg font-bold text-brand-dark mb-2">Dental Scaling & Care</h3>
+              <p class="text-sm text-gray-600 leading-relaxed">Ultrasonic plaque removal, subgingival polishing, and periodontal care to cure bad breath and tooth decay.</p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+              <span class="text-xs font-semibold text-brand-deep">From ₹1,500</span>
+              <button type="button" class="btn-book-specific text-xs font-bold text-brand-medium hover:text-brand-deep" data-service="Dental Scaling & Care">Book Now →</button>
+            </div>
+          </div>
+
+          <!-- Service Card 4 -->
+          <div class="bg-white rounded-2xl p-6 border border-brand-soft/40 hover:border-brand-medium hover:shadow-purple-soft transition-all duration-300 flex flex-col justify-between group">
+            <div>
+              <div class="w-12 h-12 rounded-xl bg-brand-mist text-brand-deep flex items-center justify-center mb-5 group-hover:bg-brand-deep group-hover:text-white transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+              </div>
+              <h3 class="text-lg font-bold text-brand-dark mb-2">Surgical Suite & Spay</h3>
+              <p class="text-sm text-gray-600 leading-relaxed">Sterile operating theater, precision anesthesia monitoring, spay/neuter, wound suturing, and soft tissue procedures.</p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+              <span class="text-xs font-semibold text-brand-deep">From ₹4,500</span>
+              <button type="button" class="btn-book-specific text-xs font-bold text-brand-medium hover:text-brand-deep" data-service="Surgery & Sterile Procedures">Book Now →</button>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mt-10 text-center">
+          <button type="button" class="btn-navigate-services inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-brand-deep bg-brand-mist hover:bg-brand-soft/40 transition-colors">
+            <span>Explore All 8 Specialized Clinical Services</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Feature Spotlight: Dr. Niha & Clinic Philosophy -->
+      <div class="py-16 bg-gradient-to-r from-brand-deep to-brand-medium text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            
+            <div class="lg:col-span-5">
+              <div class="relative rounded-2xl overflow-hidden border-4 border-white/20 shadow-2xl">
+                <img src="images/dr_niha.jpg" alt="Dr. Niha - Chief Veterinarian" class="w-full h-96 sm:h-[450px] object-cover">
+                <div class="absolute bottom-3 left-3 bg-white/90 backdrop-blur-md px-4 py-2 rounded-xl text-brand-deep font-semibold text-sm">
+                  Dr. Niha • Lead Veterinarian & Surgeon
+                </div>
+              </div>
+            </div>
+
+            <div class="lg:col-span-7 space-y-6">
+              <span class="inline-block px-3 py-1 rounded-full bg-white/10 text-brand-soft text-xs font-bold uppercase tracking-wider">
+                The Doctor's Promise
+              </span>
+              <h2 class="text-3xl sm:text-4xl font-serif font-bold tracking-tight">
+                "We don't just treat illnesses; we nurture family members."
+              </h2>
+              <p class="text-purple-100 text-base sm:text-lg leading-relaxed">
+                With extensive clinical experience in small animal medicine, internal pathology, and preventative pet wellness, <strong>Dr. Niha</strong> established this clinic in Puppalguda / Manikonda to provide a serene, stress-free haven where pets feel calm and parents feel completely heard.
+              </p>
+              
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                <div class="flex items-start gap-3 bg-white/10 p-3.5 rounded-xl backdrop-blur-sm">
+                  <div class="p-2 rounded-lg bg-brand-soft text-brand-deep">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-white text-sm">Fear-Free Protocol</h3>
+                    <p class="text-xs text-purple-200">Gentle handling and calming aromas so your pet leaves with a wagging tail.</p>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-3 bg-white/10 p-3.5 rounded-xl backdrop-blur-sm">
+                  <div class="p-2 rounded-lg bg-brand-soft text-brand-deep">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-white text-sm">Immediate Diagnostics</h3>
+                    <p class="text-xs text-purple-200">On-site hematology & ultrasound tests for timely therapeutic intervention.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pt-4 flex flex-wrap gap-4 items-center">
+                <button type="button" class="btn-navigate-about px-6 py-3 rounded-xl font-bold bg-white text-brand-deep hover:bg-brand-soft transition-colors shadow-md text-sm">
+                  Read Dr. Niha's Full Story
+                </button>
+                <button type="button" class="btn-open-booking px-6 py-3 rounded-xl font-semibold border border-brand-soft text-white hover:bg-white/10 transition-colors text-sm">
+                  Schedule a Consultation
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Featured Shop Products Preview -->
+      <div class="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row items-center justify-between mb-10 gap-4">
+          <div>
+            <span class="text-xs sm:text-sm font-bold uppercase tracking-wider text-brand-medium">Clinic Pharmacy & Boutique</span>
+            <h2 class="text-3xl sm:text-4xl font-serif font-bold text-brand-deep mt-1">Vet-Approved Pet Products</h2>
+            <p class="text-gray-600 text-sm mt-1">Only 100% authentic, medically tested nutrition, supplements, and grooming essentials.</p>
+          </div>
+          <button type="button" class="btn-navigate-shop inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-brand-deep border border-brand-soft hover:bg-brand-mist transition-colors text-sm">
+            <span>View Full Shop Catalog</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          </button>
+        </div>
+
+        <div id="home-featured-products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+
+      <!-- Testimonials & Client Reviews -->
+      <div class="py-16 bg-brand-mist/50 border-y border-brand-soft/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center max-w-2xl mx-auto mb-12">
+            <span class="text-xs font-bold uppercase tracking-wider text-brand-medium">Pet Parent Experiences</span>
+            <h2 class="text-3xl font-serif font-bold text-brand-deep mt-1">Loved by Hyderabad's Pet Families</h2>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-brand-soft/40 relative">
+              <div class="flex text-accent-gold gap-1 mb-3">★★★★★</div>
+              <p class="text-gray-700 text-sm italic mb-4 leading-relaxed">
+                "Dr. Niha is extraordinary. Our Golden Retriever, Bruno, usually trembles at vet doors, but Dr. Niha's calm demeanor and treat-first approach made him feel completely safe during his vaccinations."
+              </p>
+              <div class="flex items-center gap-3 pt-3 border-t border-gray-100">
+                <div class="w-9 h-9 rounded-full bg-brand-soft/50 text-brand-deep font-bold flex items-center justify-center text-xs">AS</div>
+                <div>
+                  <h4 class="text-xs font-bold text-brand-dark">Ananya S. & Bruno</h4>
+                  <span class="text-[11px] text-gray-500">Puppalguda Resident</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-brand-soft/40 relative">
+              <div class="flex text-accent-gold gap-1 mb-3">★★★★★</div>
+              <p class="text-gray-700 text-sm italic mb-4 leading-relaxed">
+                "Finding a truly competent feline veterinarian in Manikonda was hard until we met Dr. Niha. She diagnosed our cat Luna's allergy within minutes and provided safe herbal shampoo from her clinic store."
+              </p>
+              <div class="flex items-center gap-3 pt-3 border-t border-gray-100">
+                <div class="w-9 h-9 rounded-full bg-brand-soft/50 text-brand-deep font-bold flex items-center justify-center text-xs">RK</div>
+                <div>
+                  <h4 class="text-xs font-bold text-brand-dark">Rahul K. & Luna</h4>
+                  <span class="text-[11px] text-gray-500">Alkapur Township Resident</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-brand-soft/40 relative">
+              <div class="flex text-accent-gold gap-1 mb-3">★★★★★</div>
+              <p class="text-gray-700 text-sm italic mb-4 leading-relaxed">
+                "Dr. Niha carried out my Shih Tzu's dental scaling with utmost care. The clinic is spotless, aesthetic, and smells so fresh. Booking appointments online was completely seamless!"
+              </p>
+              <div class="flex items-center gap-3 pt-3 border-t border-gray-100">
+                <div class="w-9 h-9 rounded-full bg-brand-soft/50 text-brand-deep font-bold flex items-center justify-center text-xs">VR</div>
+                <div>
+                  <h4 class="text-xs font-bold text-brand-dark">Veda R. & Milo</h4>
+                  <span class="text-[11px] text-gray-500">Manikonda Resident</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 2. SHOP PAGE VIEW (Pet Sales & Wellness)       -->
+    <!-- ============================================== -->
+    <section id="view-shop" class="page-view hidden">
+      
+      <!-- Shop Header Banner -->
+      <div class="bg-gradient-to-r from-brand-deep via-brand-medium to-brand-soft text-white py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="max-w-xl">
+            <span class="inline-block px-3 py-1 rounded-full bg-white/20 text-xs font-semibold uppercase tracking-wider mb-2">
+              Niha's Pet Pharmacy & Boutique
+            </span>
+            <h1 class="text-3xl sm:text-4xl font-serif font-bold">Curated Clinic Sales & Nutrition</h1>
+            <p class="text-purple-100 mt-2 text-sm sm:text-base">
+              Every single product in our shop is personally vetted and approved by Dr. Niha for nutritional safety, pure ingredients, and pet happiness.
+            </p>
+          </div>
+          <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20 text-center sm:text-left flex items-center gap-4">
+            <div class="p-3 bg-brand-deep rounded-xl text-brand-soft">
+              <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div>
+              <p class="text-xs uppercase text-brand-soft font-bold">Exclusive Clinic Discount</p>
+              <p class="text-lg font-bold">Use Coupon <span class="text-accent-gold underline">NIHA10</span></p>
+              <p class="text-xs text-purple-200">10% OFF on all wellness items today</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Shop Main Catalog & Filter Interface -->
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        
+        <!-- Controls Bar: Categories & Search -->
+        <div class="flex flex-col lg:flex-row items-center justify-between gap-4 mb-8 pb-6 border-b border-brand-soft/30">
+          
+          <!-- Category Filter Pills -->
+          <div class="flex flex-wrap items-center gap-2 w-full lg:w-auto" id="shop-category-filters">
+            <button type="button" class="category-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-brand-deep text-white shadow-sm" data-category="all">
+              All Items (<span id="cat-count-all">8</span>)
+            </button>
+            <button type="button" class="category-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all bg-white border border-brand-soft/60 text-gray-700 hover:bg-brand-mist" data-category="nutrition">
+              Nutrition & Treats
+            </button>
+            <button type="button" class="category-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all bg-white border border-brand-soft/60 text-gray-700 hover:bg-brand-mist" data-category="supplements">
+              Health & Supplements
+            </button>
+            <button type="button" class="category-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all bg-white border border-brand-soft/60 text-gray-700 hover:bg-brand-mist" data-category="grooming">
+              Grooming & Spa
+            </button>
+            <button type="button" class="category-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all bg-white border border-brand-soft/60 text-gray-700 hover:bg-brand-mist" data-category="accessories">
+              Accessories & Toys
+            </button>
+          </div>
+
+          <!-- Search & Sorting -->
+          <div class="flex items-center gap-3 w-full lg:w-auto">
+            <div class="relative flex-grow sm:w-64">
+              <input type="text" id="shop-search-input" placeholder="Search products..." class="w-full pl-9 pr-4 py-2 rounded-xl border border-brand-soft bg-white text-sm focus:outline-none focus:ring-2 focus:ring-brand-deep">
+              <svg class="w-4 h-4 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            </div>
+
+            <select id="shop-sort-select" class="px-3 py-2 rounded-xl border border-brand-soft bg-white text-xs sm:text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-brand-deep">
+              <option value="featured">Sort: Featured</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="rating">Highest Rated</option>
+            </select>
+          </div>
+
+        </div>
+
+        <!-- Product Grid -->
+        <div id="shop-products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <!-- Populated by JavaScript -->
+        </div>
+
+        <!-- Empty State for Search/Filter -->
+        <div id="shop-empty-state" class="hidden text-center py-16">
+          <div class="w-16 h-16 rounded-full bg-brand-mist text-brand-medium flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          </div>
+          <h3 class="text-lg font-bold text-brand-deep">No products match your criteria</h3>
+          <p class="text-sm text-gray-500 mt-1">Try clearing your search term or selecting another category.</p>
+          <button type="button" id="reset-shop-filters" class="mt-4 px-4 py-2 rounded-xl text-xs font-semibold bg-brand-deep text-white">Reset Filters</button>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 3. SERVICES PAGE VIEW                          -->
+    <!-- ============================================== -->
+    <section id="view-services" class="page-view hidden">
+      
+      <!-- Services Banner -->
+      <div class="bg-gradient-to-r from-brand-deep to-brand-medium text-white py-14 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto text-center">
+          <span class="inline-block px-3.5 py-1 rounded-full bg-white/20 text-brand-soft text-xs font-semibold uppercase tracking-wider mb-3">
+            Clinical Excellence
+          </span>
+          <h1 class="text-3xl sm:text-5xl font-serif font-bold">Veterinary Medical Services</h1>
+          <p class="text-purple-100 mt-3 text-base max-w-2xl mx-auto">
+            Transparent pricing, modern diagnostic technologies, and fearless compassionate clinical care tailored for every stage of your pet's life.
+          </p>
+        </div>
+      </div>
+
+      <!-- Services Directory -->
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          
+          <!-- Detailed Service 1 -->
+          <div class="bg-white rounded-3xl p-6 sm:p-8 border border-brand-soft/40 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="px-3 py-1 rounded-full bg-brand-mist text-brand-deep text-xs font-bold">Preventative Medicine</span>
+                <span class="text-lg font-bold text-brand-deep">₹600 <span class="text-xs text-gray-500 font-normal">/ consult</span></span>
+              </div>
+              <h3 class="text-xl font-bold text-brand-dark mb-2">Comprehensive Health & Wellness Exam</h3>
+              <p class="text-sm text-gray-600 mb-4 leading-relaxed">
+                A meticulous snout-to-tail physical evaluation covering cardiovascular auscultation, thoracic exams, abdominal palpation, joint mobility, ophthalmic/otic checkup, and nutritional optimization.
+              </p>
+              <ul class="text-xs text-gray-600 space-y-2 mb-6">
+                <li class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                  <span>Complete physiological vital signs & weight tracking</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                  <span>Personalized diet & exercise prescription by Dr. Niha</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                  <span>Dental staging and skin/coat evaluation</span>
+                </li>
+              </ul>
+            </div>
+            <button type="button" class="btn-book-specific w-full py-3 rounded-xl font-bold text-white bg-brand-deep hover:bg-brand-medium transition-colors text-sm shadow-sm flex items-center justify-center gap-2" data-service="General Health Checkup">
+              <span>Book Wellness Exam</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+            </button>
+          </div>
+
+          <!-- Detailed Service 2 -->
+          <div class="bg-white rounded-3xl p-6 sm:p-8 border border-brand-soft/40 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="px-3 py-1 rounded-full bg-brand-mist text-brand-deep text-xs font-bold">Vaccine Protocol</span>
+                <span class="text-lg font-bold text-brand-deep">From ₹850 <span class="text-xs text-gray-500 font-normal">/ vaccine</span></span>
+              </div>
+              <h3 class="text-xl font-bold text-brand-dark mb-2">Vaccinations, Anti-Rabies & Deworming</h3>
+              <p class="text-sm text-gray-600 mb-4 leading-relaxed">
+                Protection against deadly infectious viruses. We store international grade cold-chain vaccines and provide official health passports.
+              </p>
+              <ul class="text-xs text-gray-600 space-y-2 mb-6">
+                <li class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                  <span>Puppy & Kitten core schedules (DHPPi, Parvo, Tricat, Rabies)</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                  <span>Broad-spectrum internal deworming tablet/syrup administration</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                  <span>Automated WhatsApp reminder for upcoming booster shots</span>
+                </li>
+              </ul>
+            </div>
+            <button type="button" class="btn-book-specific w-full py-3 rounded-xl font-bold text-white bg-brand-deep hover:bg-brand-medium transition-colors text-sm shadow-sm flex items-center justify-center gap-2" data-service="Vaccination & Deworming">
+              <span>Book Vaccination Appointment</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+            </button>
+          </div>
+
+          <!-- Detailed Service 3 -->
+          <div class="bg-white rounded-3xl p-6 sm:p-8 border border-brand-soft/40 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="px-3 py-1 rounded-full bg-brand-mist text-brand-deep text-xs font-bold">Diagnostics & Imaging</span>
+                <span class="text-lg font-bold text-brand-deep">From ₹1,200 <span class="text-xs text-gray-500 font-normal">/ test</span></span>
+              </div>
+              <h3 class="text-xl font-bold text-brand-dark mb-2">Advanced Ultrasonography & Lab Tests</h3>
+              <p class="text-sm text-gray-600 mb-4 leading-relaxed">
+                State-of-the-art diagnostic suite equipped for rapid abdominal sonography, organ screening, pregnancy confirmation, CBC, liver/kidney profiles, and urinalysis.
+              </p>
+              <ul class="text-xs text-gray-600 space-y-2 mb-6">
+                <li class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                  <span>Real-time color Doppler ultrasound imaging</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                  <span>Accurate same-day complete blood count (CBC) report</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                  <span>Non-invasive, pet-comfort positioning protocol</span>
+                </li>
+              </ul>
+            </div>
+            <button type="button" class="btn-book-specific w-full py-3 rounded-xl font-bold text-white bg-brand-deep hover:bg-brand-medium transition-colors text-sm shadow-sm flex items-center justify-center gap-2" data-service="Diagnostics & Ultrasound">
+              <span>Book Diagnostic Imaging</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+            </button>
+          </div>
+
+          <!-- Detailed Service 4 -->
+          <div class="bg-white rounded-3xl p-6 sm:p-8 border border-brand-soft/40 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="px-3 py-1 rounded-full bg-brand-mist text-brand-deep text-xs font-bold">Surgical Facility</span>
+                <span class="text-lg font-bold text-brand-deep">From ₹4,500 <span class="text-xs text-gray-500 font-normal">/ surgery</span></span>
+              </div>
+              <h3 class="text-xl font-bold text-brand-dark mb-2">Soft Tissue Surgery & Spay / Neuter</h3>
+              <p class="text-sm text-gray-600 mb-4 leading-relaxed">
+                Dedicated sterile operating theater with multi-parameter anesthesia monitoring, temperature-controlled recovery suites, and comprehensive post-op pain management.
+              </p>
+              <ul class="text-xs text-gray-600 space-y-2 mb-6">
+                <li class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                  <span>Canine & Feline sterilization with cosmetic sutures</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                  <span>Wound reconstructions, hematoma and tumor excision</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-emerald-500 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                  <span>Continuous vital monitoring (SpO2, ECG, Blood Pressure)</span>
+                </li>
+              </ul>
+            </div>
+            <button type="button" class="btn-book-specific w-full py-3 rounded-xl font-bold text-white bg-brand-deep hover:bg-brand-medium transition-colors text-sm shadow-sm flex items-center justify-center gap-2" data-service="Surgery & Sterile Procedures">
+              <span>Book Surgical Consultation</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Clinic Examination Room Visual -->
+        <div class="mt-14 rounded-3xl overflow-hidden border border-brand-soft/60 shadow-xl bg-white p-6 sm:p-8">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div class="lg:col-span-7">
+              <img src="images/clinic_suite.jpg" alt="Niha's Pet Care Clinic State-of-the-art Examination Suite" class="w-full h-80 sm:h-96 object-cover rounded-2xl shadow-md">
+            </div>
+            <div class="lg:col-span-5 space-y-4">
+              <span class="text-xs font-bold uppercase tracking-wider text-brand-medium">Pristine Clinical Environment</span>
+              <h3 class="text-2xl font-serif font-bold text-brand-deep">Engineered for Tranquil Healing</h3>
+              <p class="text-sm text-gray-600 leading-relaxed">
+                Our clinic in Manikonda is designed to reduce sensory overload in anxious pets. We maintain hospital-grade sanitation, non-slip ergonomic examination tables, and soothing purple ambient lighting to keep heart rates steady.
+              </p>
+              <div class="pt-2">
+                <button type="button" class="btn-open-booking px-6 py-3 rounded-xl font-bold text-white bg-brand-deep hover:bg-brand-medium transition-colors text-sm shadow-sm">
+                  Schedule Your Visit with Dr. Niha
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ============================================== -->
+    <!-- 4. ABOUT PAGE VIEW                             -->
+    <!-- ============================================== -->
+    <section id="view-about" class="page-view hidden">
+      
+      <!-- About Banner -->
+      <div class="bg-gradient-to-r from-brand-deep to-brand-medium text-white py-14 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto text-center">
+          <span class="inline-block px-3.5 py-1 rounded-full bg-white/20 text-brand-soft text-xs font-semibold uppercase tracking-wider mb-3">
+            About Our Clinic & Founder
+          </span>
+          <h1 class="text-3xl sm:text-5xl font-serif font-bold">Gentle Hands, Unmatched Expertise</h1>
+          <p class="text-purple-100 mt-3 text-base max-w-2xl mx-auto">
+            Discover the dedication, passion, and compassionate story behind Niha's Pet Care Clinic in Manikonda, Hyderabad.
+          </p>
+        </div>
+      </div>
+
+      <!-- Main About Content -->
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 space-y-16">
+        
+        <!-- Doctor Profile Card -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center bg-white p-6 sm:p-10 rounded-3xl border border-brand-soft/50 shadow-sm">
+          <div class="lg:col-span-5">
+            <div class="relative rounded-2xl overflow-hidden shadow-xl border-4 border-brand-mist">
+              <img src="images/dr_niha.jpg" alt="Dr. Niha - Chief Veterinarian" class="w-full h-[420px] object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-brand-deep/80 via-transparent to-transparent"></div>
+              <div class="absolute bottom-4 left-4 right-4 text-white">
+                <span class="text-xs uppercase tracking-wider text-brand-soft font-semibold">Founder & Lead Vet</span>
+                <h3 class="text-xl font-bold">Dr. Niha</h3>
+                <p class="text-xs text-purple-200">B.V.Sc & A.H. • Veterinary Surgeon</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7 space-y-5">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-mist text-brand-deep text-xs font-bold">
+              <span>Verified Veterinary Professional</span>
+            </div>
+            
+            <h2 class="text-2xl sm:text-3xl font-serif font-bold text-brand-deep">
+              A Lifetime of Care for Every Four-Legged Family Member
+            </h2>
+
+            <p class="text-gray-600 text-sm sm:text-base leading-relaxed">
+              Dr. Niha founded <strong>Niha's Pet Care Clinic</strong> with a singular mission: to provide pets in Hyderabad with the same standard of tender, meticulous medical care that humans expect from top healthcare centers.
+            </p>
+
+            <p class="text-gray-600 text-sm sm:text-base leading-relaxed">
+              Having consulted on over 4,800 canine, feline, and avian cases, Dr. Niha specializes in internal medicine, soft tissue surgical care, and preventive pet wellness. Her gentle approach ensures that visiting the clinic is never a scary ordeal for your furry companions.
+            </p>
+
+            <!-- Quick Credentials -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
+              <div class="p-3 rounded-xl bg-brand-silk border border-brand-soft/40">
+                <span class="block text-brand-deep font-bold text-sm">B.V.Sc & A.H.</span>
+                <span class="text-[11px] text-gray-500">Registered Veterinary Council</span>
+              </div>
+              <div class="p-3 rounded-xl bg-brand-silk border border-brand-soft/40">
+                <span class="block text-brand-deep font-bold text-sm">Fear-Free</span>
+                <span class="text-[11px] text-gray-500">Certified Handling Standards</span>
+              </div>
+              <div class="p-3 rounded-xl bg-brand-silk border border-brand-soft/40">
+                <span class="block text-brand-deep font-bold text-sm">10+ Years</span>
+                <span class="text-[11px] text-gray-500">Clinical Excellence</span>
+              </div>
+            </div>
+
+            <div class="pt-4">
+              <button type="button" class="btn-open-booking px-6 py-3 rounded-xl font-bold text-white bg-brand-deep hover:bg-brand-medium transition-colors text-sm shadow-md">
+                Book Consultation with Dr. Niha
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Clinic Pillars / Core Values -->
+        <div>
+          <div class="text-center max-w-2xl mx-auto mb-10">
+            <span class="text-xs font-bold uppercase tracking-wider text-brand-medium">Our Core Philosophy</span>
+            <h2 class="text-3xl font-serif font-bold text-brand-deep mt-1">Why Pet Parents Trust Us</h2>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <div class="bg-white p-6 rounded-2xl border border-brand-soft/40 shadow-sm">
+              <div class="w-12 h-12 rounded-xl bg-brand-mist text-brand-deep flex items-center justify-center mb-4">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              </div>
+              <h3 class="text-lg font-bold text-brand-dark mb-2">Zero-Stress Visits</h3>
+              <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                Separate waiting corners for cats and dogs, pheromone diffusers, and ample warm-up petting before any medical instrument touches your pet.
+              </p>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl border border-brand-soft/40 shadow-sm">
+              <div class="w-12 h-12 rounded-xl bg-brand-mist text-brand-deep flex items-center justify-center mb-4">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+              </div>
+              <h3 class="text-lg font-bold text-brand-dark mb-2">Complete Transparency</h3>
+              <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                No hidden costs or unnecessary tests. Dr. Niha explains every diagnostic result, medication dosage, and treatment path clearly.
+              </p>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl border border-brand-soft/40 shadow-sm">
+              <div class="w-12 h-12 rounded-xl bg-brand-mist text-brand-deep flex items-center justify-center mb-4">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+              </div>
+              <h3 class="text-lg font-bold text-brand-dark mb-2">Integrated Care & Pharmacy</h3>
+              <p class="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                From emergency triage to prescription therapeutic foods, tick prevention, and organic spa shampoos, everything is accessible under one roof.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Clinic Address & Contact Information Details -->
+        <div class="bg-gradient-to-br from-brand-silk via-white to-brand-mist/60 p-6 sm:p-10 rounded-3xl border border-brand-soft/60 shadow-md">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            
+            <div class="space-y-4">
+              <span class="text-xs font-bold uppercase tracking-wider text-brand-medium">Visit Our Facility</span>
+              <h2 class="text-2xl sm:text-3xl font-serif font-bold text-brand-deep">Clinic Location & Timings</h2>
+              
+              <div class="space-y-3 pt-2 text-sm text-gray-700">
+                <div class="flex items-start gap-3">
+                  <div class="p-2 rounded-lg bg-brand-mist text-brand-deep shrink-0 mt-0.5">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                  </div>
+                  <div>
+                    <strong class="block text-brand-dark">Clinic Address:</strong>
+                    <span>Street No. 16, Sector 2B, opp. Biryani & Biryani, Kyettaian Gouda Nilayam, Alkapur Township, Puppalguda, Manikonda, Hyderabad, Telangana</span>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-3">
+                  <div class="p-2 rounded-lg bg-brand-mist text-brand-deep shrink-0 mt-0.5">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                  </div>
+                  <div>
+                    <strong class="block text-brand-dark">Telephone & WhatsApp:</strong>
+                    <span>94921 XXXXX / +91 94921 54321</span>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-3">
+                  <div class="p-2 rounded-lg bg-brand-mist text-brand-deep shrink-0 mt-0.5">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  </div>
+                  <div>
+                    <strong class="block text-brand-dark">Consultation Hours:</strong>
+                    <span>Monday to Saturday: 9:30 AM – 1:30 PM & 4:30 PM – 9:00 PM<br>Sunday: 10:00 AM – 2:00 PM</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pt-4 flex flex-wrap gap-3">
+                <button type="button" class="btn-open-booking px-6 py-2.5 rounded-xl font-bold text-white bg-brand-deep hover:bg-brand-medium text-sm transition-colors shadow-sm">
+                  Book Slot Online
+                </button>
+                <a href="tel:9492100000" class="px-5 py-2.5 rounded-xl font-semibold text-brand-deep border border-brand-soft hover:bg-white text-sm transition-colors">
+                  Call Direct: 94921 XXXXX
+                </a>
+              </div>
+
+            </div>
+
+            <!-- Stylized Map & Landmark Card -->
+            <div class="bg-white rounded-2xl p-6 border border-brand-soft/60 shadow-sm relative overflow-hidden">
+              <div class="flex items-center justify-between pb-3 border-b border-gray-100 mb-4">
+                <span class="text-xs font-bold text-brand-deep uppercase">Landmark Guide</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-100 text-emerald-800">Easy Parking</span>
+              </div>
+              <div class="space-y-3 text-xs text-gray-600">
+                <p>📍 <strong>Exact Landmark:</strong> Located directly opposite Biryani & Biryani, on Street No. 16, Kyettaian Gouda Nilayam.</p>
+                <p>🚗 <strong>Approach from Puppalguda:</strong> Turn at Alkapur Township Sector 2B arch; proceed 300 meters.</p>
+                <p>🕒 <strong>Walk-ins Welcome:</strong> While appointments are prioritized to minimize pet wait time, emergency cases are attended immediately.</p>
+              </div>
+
+              <div class="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+                <span class="text-xs font-semibold text-gray-500">Need driving directions?</span>
+                <button type="button" id="copy-address-btn" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-brand-mist text-brand-deep hover:bg-brand-soft/40 transition-colors">
+                  Copy Address
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ============================================== -->
+  <!-- MODALS & DRAWERS                               -->
+  <!-- ============================================== -->
+
+  <!-- 1. APPOINTMENT BOOKING MODAL (Step-by-step Wizard) -->
+  <div id="booking-modal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-brand-dark/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="relative bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-brand-soft/60 my-8">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between pb-4 border-b border-gray-100">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-brand-medium">Niha's Pet Care Clinic</span>
+          <h3 class="text-xl sm:text-2xl font-serif font-bold text-brand-deep">Book an Appointment</h3>
+        </div>
+        <button type="button" id="close-booking-modal-btn" class="p-2 rounded-xl text-gray-400 hover:text-brand-deep hover:bg-brand-mist transition-colors" aria-label="Close Booking Modal">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+
+      <!-- Step Indicator -->
+      <div class="flex items-center justify-between my-5">
+        <div class="flex items-center gap-2">
+          <span id="step-badge-1" class="w-7 h-7 rounded-full bg-brand-deep text-white flex items-center justify-center text-xs font-bold">1</span>
+          <span class="text-xs font-semibold text-brand-deep">Pet Profile</span>
+        </div>
+        <div class="w-8 sm:w-16 h-0.5 bg-brand-soft/50"></div>
+        <div class="flex items-center gap-2">
+          <span id="step-badge-2" class="w-7 h-7 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center text-xs font-bold">2</span>
+          <span class="text-xs font-semibold text-gray-500">Service & Slot</span>
+        </div>
+        <div class="w-8 sm:w-16 h-0.5 bg-brand-soft/50"></div>
+        <div class="flex items-center gap-2">
+          <span id="step-badge-3" class="w-7 h-7 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center text-xs font-bold">3</span>
+          <span class="text-xs font-semibold text-gray-500">Guardian Details</span>
+        </div>
+      </div>
+
+      <!-- Booking Form -->
+      <form id="appointment-form" class="space-y-5">
+        
+        <!-- STEP 1: Pet Details -->
+        <div id="booking-step-1" class="booking-wizard-step space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase mb-2">Species Type *</label>
+            <div class="grid grid-cols-4 gap-2">
+              <label class="cursor-pointer">
+                <input type="radio" name="pet_species" value="Dog" checked class="peer sr-only">
+                <div class="p-3 text-center rounded-xl border border-brand-soft peer-checked:border-brand-deep peer-checked:bg-brand-mist/70 peer-checked:text-brand-deep text-xs font-semibold transition-all">
+                  🐕 Dog
+                </div>
+              </label>
+              <label class="cursor-pointer">
+                <input type="radio" name="pet_species" value="Cat" class="peer sr-only">
+                <div class="p-3 text-center rounded-xl border border-brand-soft peer-checked:border-brand-deep peer-checked:bg-brand-mist/70 peer-checked:text-brand-deep text-xs font-semibold transition-all">
+                  🐈 Cat
+                </div>
+              </label>
+              <label class="cursor-pointer">
+                <input type="radio" name="pet_species" value="Bird" class="peer sr-only">
+                <div class="p-3 text-center rounded-xl border border-brand-soft peer-checked:border-brand-deep peer-checked:bg-brand-mist/70 peer-checked:text-brand-deep text-xs font-semibold transition-all">
+                  🦜 Bird
+                </div>
+              </label>
+              <label class="cursor-pointer">
+                <input type="radio" name="pet_species" value="Rabbit/Other" class="peer sr-only">
+                <div class="p-3 text-center rounded-xl border border-brand-soft peer-checked:border-brand-deep peer-checked:bg-brand-mist/70 peer-checked:text-brand-deep text-xs font-semibold transition-all">
+                  🐇 Other
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="pet-name-input" class="block text-xs font-bold text-gray-700 uppercase mb-1">Pet Name *</label>
+              <input type="text" id="pet-name-input" required placeholder="e.g. Bruno or Luna" class="w-full px-3.5 py-2.5 rounded-xl border border-brand-soft text-sm focus:outline-none focus:ring-2 focus:ring-brand-deep">
+            </div>
+            <div>
+              <label for="pet-breed-input" class="block text-xs font-bold text-gray-700 uppercase mb-1">Breed & Age</label>
+              <input type="text" id="pet-breed-input" placeholder="e.g. Golden Retriever, 2 yrs" class="w-full px-3.5 py-2.5 rounded-xl border border-brand-soft text-sm focus:outline-none focus:ring-2 focus:ring-brand-deep">
+            </div>
+          </div>
+
+          <div class="flex justify-end pt-3">
+            <button type="button" id="btn-next-step-1" class="px-6 py-2.5 rounded-xl font-bold text-white bg-brand-deep hover:bg-brand-medium text-sm transition-colors flex items-center gap-2">
+              <span>Next: Select Service & Time</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 2: Service & Date/Time -->
+        <div id="booking-step-2" class="booking-wizard-step hidden space-y-4">
+          <div>
+            <label for="booking-service-input" class="block text-xs font-bold text-gray-700 uppercase mb-1">Select Veterinary Service *</label>
+            <select id="booking-service-input" required class="w-full px-3.5 py-2.5 rounded-xl border border-brand-soft text-sm focus:outline-none focus:ring-2 focus:ring-brand-deep bg-white">
+              <option value="General Health Checkup">General Health Checkup & Consultation (₹600)</option>
+              <option value="Vaccination & Deworming">Vaccination & Deworming (From ₹850)</option>
+              <option value="Diagnostics & Ultrasound">Diagnostics & In-house Ultrasound (From ₹1,200)</option>
+              <option value="Dental Scaling & Care">Dental Ultrasonic Scaling (From ₹1,500)</option>
+              <option value="Surgery & Sterile Procedures">Soft Tissue Surgery Consultation (From ₹4,500)</option>
+              <option value="Dermatology & Skin Allergy">Dermatology & Allergy Care (From ₹900)</option>
+              <option value="Therapeutic Grooming & Spa">Therapeutic Grooming & Spa (From ₹1,200)</option>
+            </select>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="booking-date-input" class="block text-xs font-bold text-gray-700 uppercase mb-1">Preferred Date *</label>
+              <input type="date" id="booking-date-input" required class="w-full px-3.5 py-2.5 rounded-xl border border-brand-soft text-sm focus:outline-none focus:ring-2 focus:ring-brand-deep">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Preferred Slot *</label>
+              <select id="booking-slot-input" required class="w-full px-3.5 py-2.5 rounded-xl border border-brand-soft text-sm focus:outline-none focus:ring-2 focus:ring-brand-deep bg-white">
+                <option value="Morning (10:00 AM - 11:30 AM)">Morning (10:00 AM - 11:30 AM)</option>
+                <option value="Morning (11:30 AM - 1:00 PM)">Morning (11:30 AM - 1:00 PM)</option>
+                <option value="Evening (4:30 PM - 6:30 PM)">Evening (4:30 PM - 6:30 PM)</option>
+                <option value="Evening (6:30 PM - 8:30 PM)">Evening (6:30 PM - 8:30 PM)</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label for="booking-notes-input" class="block text-xs font-bold text-gray-700 uppercase mb-1">Symptoms or Reason for Visit</label>
+            <textarea id="booking-notes-input" rows="2" placeholder="e.g. Mild limping, annual booster due, ear scratching, lethargy..." class="w-full px-3.5 py-2 rounded-xl border border-brand-soft text-sm focus:outline-none focus:ring-2 focus:ring-brand-deep"></textarea>
+          </div>
+
+          <div class="flex items-center justify-between pt-3">
+            <button type="button" id="btn-back-step-2" class="px-5 py-2.5 rounded-xl font-semibold text-gray-600 hover:bg-gray-100 text-sm">
+              ← Back
+            </button>
+            <button type="button" id="btn-next-step-2" class="px-6 py-2.5 rounded-xl font-bold text-white bg-brand-deep hover:bg-brand-medium text-sm transition-colors flex items-center gap-2">
+              <span>Next: Guardian Details</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 3: Guardian Details & Final Confirm -->
+        <div id="booking-step-3" class="booking-wizard-step hidden space-y-4">
+          <div>
+            <label for="guardian-name-input" class="block text-xs font-bold text-gray-700 uppercase mb-1">Pet Parent Name *</label>
+            <input type="text" id="guardian-name-input" required placeholder="e.g. Rajesh Sharma" class="w-full px-3.5 py-2.5 rounded-xl border border-brand-soft text-sm focus:outline-none focus:ring-2 focus:ring-brand-deep">
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="guardian-phone-input" class="block text-xs font-bold text-gray-700 uppercase mb-1">Mobile Contact *</label>
+              <input type="tel" id="guardian-phone-input" required placeholder="e.g. 94921 XXXXX" class="w-full px-3.5 py-2.5 rounded-xl border border-brand-soft text-sm focus:outline-none focus:ring-2 focus:ring-brand-deep">
+            </div>
+            <div>
+              <label for="guardian-email-input" class="block text-xs font-bold text-gray-700 uppercase mb-1">Email Address</label>
+              <input type="email" id="guardian-email-input" placeholder="e.g. rajesh@example.com" class="w-full px-3.5 py-2.5 rounded-xl border border-brand-soft text-sm focus:outline-none focus:ring-2 focus:ring-brand-deep">
+            </div>
+          </div>
+
+          <div>
+            <label for="guardian-area-input" class="block text-xs font-bold text-gray-700 uppercase mb-1">Area / Locality in Hyderabad</label>
+            <input type="text" id="guardian-area-input" placeholder="e.g. Alkapur Township / Puppalguda / Manikonda" class="w-full px-3.5 py-2.5 rounded-xl border border-brand-soft text-sm focus:outline-none focus:ring-2 focus:ring-brand-deep">
+          </div>
+
+          <!-- Doctor Allocation Note -->
+          <div class="p-3.5 rounded-xl bg-brand-mist border border-brand-soft/60 flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-brand-deep text-white flex items-center justify-center font-bold text-xs shrink-0">
+              Dr.N
+            </div>
+            <div class="text-xs text-brand-dark">
+              <strong>Attending Physician:</strong> Dr. Niha will review your pet's appointment immediately upon arrival.
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between pt-3">
+            <button type="button" id="btn-back-step-3" class="px-5 py-2.5 rounded-xl font-semibold text-gray-600 hover:bg-gray-100 text-sm">
+              ← Back
+            </button>
+            <button type="submit" id="btn-submit-booking" class="px-7 py-3 rounded-xl font-bold text-white bg-brand-deep hover:bg-brand-medium text-sm transition-colors shadow-md flex items-center gap-2">
+              <span>Confirm & Lock Appointment</span>
+              <svg class="w-4 h-4 text-emerald-300" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+            </button>
+          </div>
+        </div>
+
+      </form>
+
+      <!-- Confirmation Screen (shown after successful submission) -->
+      <div id="booking-success-view" class="hidden text-center py-6 space-y-4">
+        <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        </div>
+        <h4 class="text-2xl font-serif font-bold text-brand-deep">Appointment Confirmed!</h4>
+        <p class="text-sm text-gray-600 max-w-md mx-auto">
+          Your appointment at <strong>Niha's Pet Care Clinic</strong> has been successfully booked with Dr. Niha.
+        </p>
+
+        <div class="p-4 rounded-2xl bg-brand-mist/70 border border-brand-soft/60 text-left max-w-md mx-auto space-y-2 text-xs">
+          <div class="flex justify-between border-b border-gray-200/50 pb-1.5">
+            <span class="text-gray-500">Booking Reference:</span>
+            <span id="confirm-ref-id" class="font-bold text-brand-deep">NPC-2026-8942</span>
+          </div>
+          <div class="flex justify-between border-b border-gray-200/50 pb-1.5">
+            <span class="text-gray-500">Pet & Service:</span>
+            <span id="confirm-pet-service" class="font-semibold text-gray-800">Bruno (Dog) • Health Checkup</span>
+          </div>
+          <div class="flex justify-between border-b border-gray-200/50 pb-1.5">
+            <span class="text-gray-500">Date & Slot:</span>
+            <span id="confirm-date-slot" class="font-semibold text-gray-800">Tomorrow • 10:00 AM</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-gray-500">Doctor:</span>
+            <span class="font-semibold text-brand-deep">Dr. Niha (B.V.Sc & A.H.)</span>
+          </div>
+        </div>
+
+        <div class="pt-3 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <button type="button" id="btn-done-booking" class="px-6 py-2.5 rounded-xl font-bold bg-brand-deep text-white hover:bg-brand-medium text-sm transition-colors">
+            Return to Clinic Home
+          </button>
+        </div>
+      </div>
+
     </div>
   </div>
-</div>
+
+  <!-- 2. SHOPPING CART SLIDE-OVER DRAWER -->
+  <div id="cart-drawer-backdrop" class="fixed inset-0 z-50 hidden bg-brand-dark/50 backdrop-blur-xs transition-opacity duration-300">
+    <div id="cart-drawer" class="fixed right-0 top-0 bottom-0 max-w-md w-full bg-white shadow-2xl flex flex-col z-50 transform translate-x-full transition-transform duration-300 ease-in-out border-l border-brand-soft/40">
+      
+      <!-- Drawer Header -->
+      <div class="p-5 border-b border-gray-100 flex items-center justify-between bg-brand-silk">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-brand-deep text-white flex items-center justify-center">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-brand-deep text-base">Your Pet Care Basket</h3>
+            <span id="cart-drawer-count" class="text-xs text-gray-500">0 items selected</span>
+          </div>
+        </div>
+        <button type="button" id="close-cart-btn" class="p-2 rounded-lg text-gray-400 hover:text-brand-deep hover:bg-brand-mist" aria-label="Close Shopping Cart">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+
+      <!-- Free Shipping Banner -->
+      <div class="bg-brand-mist px-5 py-2.5 border-b border-brand-soft/30 text-xs flex items-center justify-between text-brand-dark">
+        <span>🚚 Free Clinic Delivery in Manikonda above ₹999</span>
+        <span class="font-bold text-brand-deep">Local Express</span>
+      </div>
+
+      <!-- Cart Items List Container -->
+      <div id="cart-items-container" class="flex-grow overflow-y-auto p-5 space-y-4">
+        <!-- Rendered by JavaScript -->
+      </div>
+
+      <!-- Drawer Footer with Promo & Checkout -->
+      <div class="p-5 border-t border-gray-100 bg-brand-silk space-y-3">
+        <!-- Coupon Form -->
+        <div class="flex gap-2">
+          <input type="text" id="coupon-code-input" placeholder="Promo code (e.g. NIHA10)" class="uppercase px-3 py-2 rounded-xl border border-brand-soft text-xs flex-grow focus:outline-none focus:ring-2 focus:ring-brand-deep bg-white">
+          <button type="button" id="apply-coupon-btn" class="px-4 py-2 rounded-xl text-xs font-semibold bg-brand-deep text-white hover:bg-brand-medium">Apply</button>
+        </div>
+        <div id="coupon-feedback" class="text-[11px] hidden font-semibold"></div>
+
+        <!-- Totals Breakdown -->
+        <div class="space-y-1.5 text-xs text-gray-600 pt-2 border-t border-gray-200/50">
+          <div class="flex justify-between">
+            <span>Subtotal</span>
+            <span id="cart-subtotal-text" class="font-semibold text-gray-800">₹0</span>
+          </div>
+          <div id="cart-discount-row" class="hidden flex justify-between text-emerald-600">
+            <span>Clinic Discount (10%)</span>
+            <span id="cart-discount-text">-₹0</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Delivery / Handling</span>
+            <span id="cart-delivery-text" class="font-semibold text-emerald-600">FREE</span>
+          </div>
+          <div class="flex justify-between text-sm font-bold text-brand-deep pt-1.5 border-t border-gray-200">
+            <span>Grand Total</span>
+            <span id="cart-total-text">₹0</span>
+          </div>
+        </div>
+
+        <button type="button" id="btn-proceed-checkout" class="w-full py-3 rounded-xl font-bold text-white bg-brand-deep hover:bg-brand-medium transition-colors text-sm shadow-md flex items-center justify-center gap-2">
+          <span>Proceed to Quick Checkout</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 3. PRODUCT DETAILS MODAL -->
+  <div id="product-detail-modal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-brand-dark/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="relative bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl border border-brand-soft/60">
+      <button type="button" id="close-product-modal-btn" class="absolute top-5 right-5 p-2 rounded-xl text-gray-400 hover:text-brand-deep hover:bg-brand-mist" aria-label="Close Product Details">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+
+      <div id="product-modal-content" class="space-y-4">
+        <!-- Rendered by JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. CHECKOUT SUCCESS SIMULATION MODAL -->
+  <div id="checkout-modal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-brand-dark/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="relative bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl text-center space-y-4 border border-brand-soft/60">
+      <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+      </div>
+      <h3 class="text-2xl font-serif font-bold text-brand-deep">Order Placed Successfully!</h3>
+      <p class="text-xs text-gray-600">
+        Thank you for purchasing with <strong>Niha's Pet Care Clinic</strong>. Your order has been registered for swift dispatch / clinic pickup.
+      </p>
+      
+      <div class="p-4 rounded-xl bg-brand-mist text-left text-xs space-y-1.5 border border-brand-soft/40">
+        <div class="flex justify-between">
+          <span class="text-gray-500">Order ID:</span>
+          <span id="checkout-order-id" class="font-bold text-brand-deep">ORD-7749</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-gray-500">Total Paid:</span>
+          <span id="checkout-total-paid" class="font-bold text-gray-800">₹0</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-gray-500">Pickup / Delivery:</span>
+          <span class="font-semibold text-brand-medium">Manikonda Local Dispatch</span>
+        </div>
+      </div>
+
+      <button type="button" id="close-checkout-modal-btn" class="w-full py-2.5 rounded-xl font-bold bg-brand-deep text-white hover:bg-brand-medium text-sm transition-colors">
+        Continue Shopping
+      </button>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- FOOTER                                         -->
+  <!-- ============================================== -->
+  <footer class="bg-brand-deep text-white border-t border-brand-medium/40 pt-16 pb-12 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-brand-medium/30">
+        
+        <!-- Col 1: Brand Info -->
+        <div class="lg:col-span-4 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-brand-soft text-brand-deep flex items-center justify-center font-bold text-lg shadow-sm">
+              🐾
+            </div>
+            <span class="text-xl font-serif font-bold tracking-tight">Niha's Pet Care Clinic</span>
+          </div>
+          <p class="text-xs sm:text-sm text-purple-200 leading-relaxed">
+            Hyderabad's trusted veterinary clinic for compassionate healing, surgical precision, ultrasonic dental scaling, preventative immunization, and certified boutique pet nutrition.
+          </p>
+          <div class="pt-1 text-xs text-brand-soft font-semibold">
+            Chief Veterinarian: Dr. Niha (B.V.Sc & A.H.)
+          </div>
+        </div>
+
+        <!-- Col 2: Quick Links -->
+        <div class="lg:col-span-2 space-y-3">
+          <h4 class="text-sm font-bold uppercase tracking-wider text-brand-soft">Quick Navigation</h4>
+          <ul class="space-y-2 text-xs sm:text-sm text-purple-200">
+            <li><button type="button" class="footer-nav-link hover:text-white transition-colors" data-target="home">Home</button></li>
+            <li><button type="button" class="footer-nav-link hover:text-white transition-colors" data-target="shop">Pet Shop & Pharmacy</button></li>
+            <li><button type="button" class="footer-nav-link hover:text-white transition-colors" data-target="services">Clinical Services</button></li>
+            <li><button type="button" class="footer-nav-link hover:text-white transition-colors" data-target="about">About Dr. Niha</button></li>
+            <li><button type="button" class="btn-open-booking text-accent-gold font-semibold hover:underline">Book Appointment</button></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Clinical Services -->
+        <div class="lg:col-span-3 space-y-3">
+          <h4 class="text-sm font-bold uppercase tracking-wider text-brand-soft">Featured Services</h4>
+          <ul class="space-y-2 text-xs text-purple-200">
+            <li>• Comprehensive Health Checkups</li>
+            <li>• Vaccinations & Immunity Protocols</li>
+            <li>• In-house Ultrasound & Lab CBC</li>
+            <li>• Ultrasonic Dental Scaling</li>
+            <li>• Soft Tissue Spay / Neuter Surgery</li>
+            <li>• Medicated Spa & Therapeutic Grooming</li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Contact & Address -->
+        <div class="lg:col-span-3 space-y-3 text-xs text-purple-200">
+          <h4 class="text-sm font-bold uppercase tracking-wider text-brand-soft">Clinic Address & Contact</h4>
+          <p class="leading-relaxed">
+            Street No. 16, Sector 2B, opp. Biryani & Biryani, Kyettaian Gouda Nilayam, Alkapur Township, Puppalguda, Manikonda, Hyderabad, Telangana
+          </p>
+          <p class="pt-1">
+            <strong>Contact:</strong> 94921 XXXXX / +91 94921 54321
+          </p>
+          <div class="pt-2">
+            <button type="button" class="btn-open-booking w-full py-2.5 rounded-xl font-bold bg-brand-soft text-brand-deep hover:bg-white transition-colors text-xs shadow-sm">
+              Book Online Appointment
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Copyright & Bottom Line -->
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-purple-300 gap-4">
+        <p>© 2026 Niha's Pet Care Clinic. All rights reserved.</p>
+        <p class="flex items-center gap-2">
+          <span>Puppalguda • Alkapur Township • Manikonda • Hyderabad</span>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================== -->
+  <!-- JAVASCRIPT APPLICATION LOGIC                   -->
+  <!-- ============================================== -->
+  <script src="home.js"></script>
+</body>
+</html>
